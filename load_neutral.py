@@ -1,5 +1,6 @@
 from transformers import pipeline
 import pandas as pd
+from tqdm import tqdm
 
 # https://huggingface.co/Osiris/neutral_non_neutral_classifier
 # LABEL_1: Non Neutral (have some emotions)
@@ -8,20 +9,24 @@ import pandas as pd
 
 def load_non_neutral(model, dataset):
     deleted = []
-    for i in range(dataset.shape[0]):
-        if model(dataset.iloc[i, 0])[0]['label'] == 'Neutral':
+    for i in tqdm(range(dataset.shape[0])):
+        # Here iloc[i,1], you need to set sentence at second column
+        if model(dataset.iloc[i, 1])[0]['label'] == 'Neutral':
             deleted.append(i)
     dataset = dataset.drop(deleted)
-    dataset.to_csv('non_neutral.csv', header=None, index=None)
+    # dataset.to_csv('non_neutral.csv', header=None, index=None)
+    return dataset
 
 
 def load_neutral(model, dataset):
     deleted = []
-    for i in range(dataset.shape[0]):
-        if model(dataset.iloc[i, 0])[0]['label'] == 'Non-Neutral':
+    for i in tqdm(range(dataset.shape[0])):
+        # Here iloc[i,1], you need to set sentence at second column
+        if model(dataset.iloc[i, 1])[0]['label'] == 'Non-Neutral':
             deleted.append(i)
     dataset = dataset.drop(deleted)
-    dataset.to_csv('neutral.csv', header=None, index=None)
+    # dataset.to_csv('neutral.csv', header=None, index=None)
+    return dataset
 
 
 if __name__ == '__main__':

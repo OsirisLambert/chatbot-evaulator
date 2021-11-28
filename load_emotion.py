@@ -11,13 +11,13 @@ def load_emotion(ec_model, nnc_model, dataset):
 	score = 0
 	ct = 0
 	for idx, row in dataset.iterrows():
-		label_nn = nnc(row['System'])[0]['label']
+		label_nn = nnc_model(row['sentence2'])[0]['label']	# row['sentence2'] ==> system response
 		# if system utterance is neutral => get 0.5 point
 		if label_nn == 'Neutral':
 			score += 0.5
 		else:
-			label_user = ec(row['User'])[0]['label']
-			label_sys = ec(row['System'])[0]['label']
+			label_user = ec_model(row['sentence1'])[0]['label']	# row['sentence1'] ==> user response
+			label_sys = ec_model(row['sentence2'])[0]['label']
 			# if user and system are both pos/neg => get 1.0 point
 			if label_user == label_sys:
 				score += 1
