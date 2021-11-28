@@ -8,7 +8,7 @@ from tqdm import tqdm
 if __name__ == '__main__':
 	# Load dataset
 	print("Reading Test File...")
-	df = pd.read_csv('test.csv', encoding='utf-8', error_bad_lines=False)
+	df = pd.read_csv('test1.csv', encoding='utf-8', error_bad_lines=False)
 
 	# Load models
 	# Neutral / Non-Neutral Classifier
@@ -33,5 +33,5 @@ if __name__ == '__main__':
 	# Step 3: Checking emotional consistency, calculating socres
 	print("Checking emotional consistency, calculating socres...")
 	score = load_emotion(ec, nnc, non_neutral_df)
-	print("chatbot evaluation score is: {score}")
+	print("chatbot evaluation score is: ", score)
 
