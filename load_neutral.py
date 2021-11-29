@@ -11,22 +11,22 @@ def load_non_neutral(model, dataset):
     deleted = []
     for i in tqdm(range(dataset.shape[0])):
         # Here iloc[i,1], you need to set sentence at second column
-        if model(dataset.iloc[i, 1])[0]['label'] == 'Neutral':
+        if model(dataset.iloc[i].sentence1)[0]['label'] == 'Neutral':
             deleted.append(i)
-    dataset = dataset.drop(deleted)
+    df = dataset.drop(deleted)
     # dataset.to_csv('non_neutral.csv', header=None, index=None)
-    return dataset
+    return df
 
 
 def load_neutral(model, dataset):
     deleted = []
     for i in tqdm(range(dataset.shape[0])):
         # Here iloc[i,1], you need to set sentence at second column
-        if model(dataset.iloc[i, 1])[0]['label'] == 'Non-Neutral':
+        if model(dataset.iloc[i].sentence1)[0]['label'] == 'Non-Neutral':
             deleted.append(i)
-    dataset = dataset.drop(deleted)
+    df = dataset.drop(deleted)
     # dataset.to_csv('neutral.csv', header=None, index=None)
-    return dataset
+    return df
 
 
 if __name__ == '__main__':
