@@ -3,12 +3,12 @@ import pandas as pd
 import torch
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 
-class fb_chatbot:
-    def __init__(self):
-        self.tokenizer = AutoTokenizer.from_pretrained("facebook/blenderbot-400M-distill")
-        self.model = AutoModelForSeq2SeqLM.from_pretrained("facebook/blenderbot-400M-distill")
+class chatbot:
+    def __init__(self, tokenizer, model):
+        self.tokenizer = tokenizer
+        self.model = model
 
-    def chatbot(self, user_utterance):
+    def generate_response(self, user_utterance):
         in_tensor = self.tokenizer.encode(user_utterance + self.tokenizer.eos_token, return_tensors='pt')
         if len(in_tensor[0])< 128:
             out_tensor = self.model.generate(in_tensor,
@@ -28,17 +28,6 @@ class fb_chatbot:
         return out_utterance
 
 
-if __name__ == '__main__':
-    df = pd.read_csv('dailydialog_emotion_test.csv') # You will need to use your own path
-
-    chatbot('You\'re welcome . We wish you a speedy recovery . Goodbye .')
-
-    df_test = df.sample(20).drop(columns=['label'])
-    df_test['sentence2'] = df_test.sentence1.apply(chatbot)
-    df_test
-
-
-    df_test.to_csv('dailydialog_emotion_test_response.csv')
 
 
 
