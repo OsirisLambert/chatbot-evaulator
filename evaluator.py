@@ -50,12 +50,14 @@ if __name__ == '__main__':
 
 	# Step 2: Generate chatbot response, here, we use facebook/blenderbot-400M-distill and
 	# microsoft/DialoGPT-large as examples
-	print("Generate facebook chatbot response...")
 	tqdm.pandas()
+
+	print("Generate facebook chatbot response...")
 	non_neutral_df['sentence2'] = non_neutral_df.sentence1.progress_apply(fb.generate_response)
 
 	print("Generate microsoft-large chatbot response...")
-	non_neutral_df['sentence3'] = non_neutral_df.sentence1.progress_apply(gpt.generate_response)
+	non_neutral_df['sentence3'] = non_neutral_df.sentence1.progress_apply(gpt.generate_response_gpt)
+
 
 	if args.save:
 		non_neutral_df.to_csv('full_conversations.csv', index=None, encoding='utf-8')
@@ -68,10 +70,6 @@ if __name__ == '__main__':
 	print("Checking microsoft large Chatbot emotional consistency, calculating socres...")
 	gpt_score = load_emotion(ec, nnc, non_neutral_df, 'sentence3')
 	print("microsoft large chatbot evaluation score is: ", gpt_score)
-
-	print("Checking microsoft small Chatbot emotional consistency, calculating socres...")
-	gpt_s_score = load_emotion(ec, nnc, non_neutral_df, 'sentence4')
-	print("microsoft small chatbot evaluation score is: ", gpt_s_score)
 
 	if args.human_eval:
 		# Step 4: (OPTIOANL) Check human response, calculating socres
