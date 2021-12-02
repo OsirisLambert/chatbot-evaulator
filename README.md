@@ -1,5 +1,7 @@
 # chatbot-evaulator
+In the current research, chatbots can recognize and acknowledge a speaker’s feelings in a conversation. However, we are still facing a big problem about how to ensure that chatbots are emotionally consistent. A practical and qualified chatbot can not only respond to human input but also will be able to cater to the emotional needs of the user. A chatbot is not supposed to respond “that’s great to hear” to the user’s input “I feel sick today”. Up to our knowledge, there is no existing way that can automatically evaluate the performance of a chatbot in terms of empathetic responding. In this research, we aim to train an evaluator that can effectively evaluate the emotional consistency of chatbots.
 
+Check out our [paper]().
 # Load_neutral.py
 In load_neutral / load_non_neutral function, it requires two parameters, one is a model and the other is a dataset. The main goal is to divide the sentences in the raw dataset into two groups, neutral and non-neutral ones. The load_neutral function will return a sub dataset that contains only neutral sentences from the original dataset while the load_non_neutral function will return a sub dataset that contains only non-neutral sentences. 
 
